@@ -1,30 +1,46 @@
 <?php
 include 'db.php';
 
-// Adicionar agendamento e produtos
+// Verificar se houve envio de formulário via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $barber_id = $_POST['barber_id'];
-    $client_id = $_POST['client_id'];
-    $appointment_date = $_POST['appointment_date'];
-    $product_ids = $_POST['product_id'];
-    $quantities = $_POST['quantity'];
+    // Verificar se todas as variáveis esperadas estão definidas
+    if (
+        isset($_POST['barber_id']) &&
+        isset($_POST['client_id']) &&
+        isset($_POST['appointment_date']) &&
+        isset($_POST['product_id']) &&
+        isset($_POST['quantity'])
+    ) {
+        $barber_id = $_POST['barber_id'];
+        $client_id = $_POST['client_id'];
+        $appointment_date = $_POST['appointment_date'];
+        $product_ids = $_POST['product_id'];
+        $quantities = $_POST['quantity'];
 
-    $sql = "INSERT INTO appointments (barber_id, client_id, appointment_date) VALUES ('$barber_id', '$client_id', '$appointment_date')";
+        // Verificar se $product_ids e $quantities são arrays e têm o mesmo tamanho
+        if (is_array($product_ids) && is_array($quantities) && count($product_ids) === count($quantities)) {
+            $sql = "INSERT INTO appointments (barber_id, client_id, appointment_date) VALUES ('$barber_id', '$client_id', '$appointment_date')";
 
-    if ($conn->query($sql) === TRUE) {
-        $appointment_id = $conn->insert_id;
+            if ($conn->query($sql) === TRUE) {
+                $appointment_id = $conn->insert_id;
 
-        // Adicionar produtos ao agendamento
-        for ($i = 0; $i < count($product_ids); $i++) {
-            $product_id = $product_ids[$i];
-            $quantity = $quantities[$i];
-            $sql = "INSERT INTO appointment_products (appointment_id, product_id, quantity) VALUES ('$appointment_id', '$product_id', '$quantity')";
-            $conn->query($sql);
+                // Adicionar produtos ao agendamento
+                for ($i = 0; $i < count($product_ids); $i++) {
+                    $product_id = $product_ids[$i];
+                    $quantity = $quantities[$i];
+                    $sql = "INSERT INTO appointment_products (appointment_id, product_id, quantity) VALUES ('$appointment_id', '$product_id', '$quantity')";
+                    $conn->query($sql);
+                }
+
+                echo "Novo agendamento criado com sucesso!";
+            } else {
+                echo "Erro: " . $sql . "<br>" . $conn->error;
+            }
+        } else {
+            echo "Erro: Produtos e quantidades devem ser arrays e ter o mesmo tamanho.";
         }
-
-        echo "Novo agendamento criado com sucesso!";
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        echo "Erro: Todos os campos são obrigatórios.";
     }
 }
 
@@ -33,7 +49,10 @@ $barbers = $conn->query("SELECT id, name FROM barbers");
 $clients = $conn->query("SELECT id, name FROM clients");
 $products = $conn->query("SELECT id, name, price FROM products");
 
-// Obter todos os agendamentos e produtos associados
+// Obter a data atual no formato adequado para consulta SQL
+$today = date('Y-m-d');
+
+// Obter todos os agendamentos do dia atual
 $appointments = $conn->query("
     SELECT 
         appointments.id, 
@@ -47,6 +66,8 @@ $appointments = $conn->query("
         barbers ON appointments.barber_id = barbers.id 
     JOIN 
         clients ON appointments.client_id = clients.id
+    WHERE 
+        DATE(appointments.appointment_date) = '$today'
 ");
 
 $appointment_products = [];
@@ -85,7 +106,10 @@ while ($row = $result->fetch_assoc()) {
         <br>
         <label for="client_id">Cliente:</label>
         <select id="client_id" name="client_id" required>
-            <?php while($row = $clients->fetch_assoc()): ?>
+            <?php
+            // Reiniciar a consulta para os clientes, pois o ponteiro do resultado já foi percorrido
+            $clients->data_seek(0);
+            while($row = $clients->fetch_assoc()): ?>
                 <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
             <?php endwhile; ?>
         </select>
@@ -104,13 +128,10 @@ while ($row = $result->fetch_assoc()) {
         <input type="number" id="quantity[]" name="quantity[]" min="1" value="1">
         <br><br>
         <button type="submit">Criar</button>
-        <a style="background: beige;
-    color: black;
-    padding: 0.2rem 2rem;" href="./index.php">Volta</a>
-    </form>
+        <a style="background: beige; color: black; padding: 0.2rem 2rem;" href="./index.php">Voltar</a>
     </form>
 
-    <h1>Agendamentos Existentes</h1>
+    <h1>Agendamentos do Dia Atual</h1>
     <table border="1">
         <tr>
             <th>ID</th>

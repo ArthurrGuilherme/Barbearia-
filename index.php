@@ -29,9 +29,11 @@
             <!--Paginas-->
         </header>
         <section>
-            <article>
-                <h1>Bem-vindo ao sistema de agendamento da <strong class="Logo">ARBarber</strong></h1>
-            </article>    
+            <!--Texto de apresentação-->
+                <article>
+                    <h1>Bem-vindo ao sistema de agendamento da <strong class="Logo">ARBarber</strong></h1>
+                </article>
+            <!--Texto de apresentação-->    
         </section>    
     </main>    
 </body>
