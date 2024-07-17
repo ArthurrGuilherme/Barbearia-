@@ -38,7 +38,7 @@ $clients = $conn->query("SELECT id, name, email, phone FROM clients");
         <br>
         <label for="phone">Telefone:</label>
         <input type="text" id="phone" name="phone">
-        <br>
+        <br><br>
         <button type="submit">Adicionar</button>
         <a style="background: beige;
     color: black;

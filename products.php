@@ -39,8 +39,12 @@ $products = $conn->query("SELECT id, name, price, description, stock FROM produc
         <br>
         <label for="description">Descrição:</label>
         <textarea id="description" name="description"></textarea>
-        <br>
+        <br><br>
         <button type="submit">Adicionar</button>
+        <a style="background: beige;
+    color: black;
+    padding: 0.2rem 2rem;" href="./index.php">Volta</a>
+    </form>
     </form>
 
     <h1>Produtos Existentes</h1>

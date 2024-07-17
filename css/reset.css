@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+BE+VLG:wght@100..400&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    text-decoration: none;
+}
+main {
+    background: url(https://i.pinimg.com/564x/32/9d/0b/329d0b421f39b2eb2805081a0d1b0bf5.jpg);
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/*Head*/
+    header {
+        width: 95%;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    nav ul{
+        display: flex;
+        list-style: none;
+        gap: 1rem;
+    }
+    .Logo {
+        background: linear-gradient(#ff0000 40%, #101010a8 50%, rgb(27, 132, 125) 20%);
+        text-transform: uppercase;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: "Playwrite BE VLG", cursive;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+    li a {
+        color: black;
+        transition: all .5s;
+    }
+    li a:hover {
+        background: linear-gradient(#ff0000 40%, #101010a8 50%, rgb(27, 132, 125) 20%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+/*Head*/

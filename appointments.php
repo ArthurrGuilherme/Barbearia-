@@ -102,8 +102,12 @@ while ($row = $result->fetch_assoc()) {
         <br>
         <label for="quantity[]">Quantidade:</label>
         <input type="number" id="quantity[]" name="quantity[]" min="1" value="1">
-        <br>
+        <br><br>
         <button type="submit">Criar</button>
+        <a style="background: beige;
+    color: black;
+    padding: 0.2rem 2rem;" href="./index.php">Volta</a>
+    </form>
     </form>
 
     <h1>Agendamentos Existentes</h1>
