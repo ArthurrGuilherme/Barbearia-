@@ -12,6 +12,7 @@
             <li><a href="barbers.php">Barbeiros</a></li>
             <li><a href="clients.php">Clientes</a></li>
             <li><a href="appointments.php">Agendamentos</a></li>
+            <li><a href="products.php">Produtos</a></li>
         </ul>
     </nav>
 </body>

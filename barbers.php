@@ -39,7 +39,11 @@ $barbers = $conn->query("SELECT id, name, email, phone FROM barbers");
         <label for="phone">Telefone:</label>
         <input type="text" id="phone" name="phone">
         <br>
+        <br>
         <button type="submit">Adicionar</button>
+        <a style="background: beige;
+    color: black;
+    padding: 0.2rem 2rem;" href="./index.php">Volta</a>
     </form>
 
     <h1>Barbeiros Existentes</h1>

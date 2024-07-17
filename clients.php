@@ -40,6 +40,9 @@ $clients = $conn->query("SELECT id, name, email, phone FROM clients");
         <input type="text" id="phone" name="phone">
         <br>
         <button type="submit">Adicionar</button>
+        <a style="background: beige;
+    color: black;
+    padding: 0.2rem 2rem;" href="./index.php">Volta</a>
     </form>
 
     <h1>Clientes Existentes</h1>
