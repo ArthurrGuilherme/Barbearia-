@@ -9,9 +9,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO products (name, price) VALUES ('$name', '$price')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Novo produto adicionado com sucesso!";
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Bom trabalho!',
+                text: 'Produto adicionado com sucesso!',
+                icon: 'success',
+            });
+        });
+        </script>";
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Erro: " . $conn->error . "',
+                icon: 'error',
+            });
+        });
+        </script>";
     }
 }
 
@@ -25,28 +41,29 @@ $products = $conn->query("SELECT id, name, price, description, stock FROM produc
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Produtos</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--css-->
-        <link rel="stylesheet" href="./css/reset.css">
-        <link rel="stylesheet" href="./css/barbers.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/barbers.css">
     <!--css-->
 </head>
 <body>
     <main>
         <header>
             <!--Logo-->
-                <strong>
-                    <a href="./index.php" class="Logo">ARBarber</a>
-                </strong>
+            <strong>
+                <a href="./index.php" class="Logo">ARBarber</a>
+            </strong>
             <!--Logo-->
             <!--Paginas-->
-                <nav>
-                    <ul>
-                        <li><a href="barbers.php">Barbeiros</a></li>
-                        <li><a href="clients.php">Clientes</a></li>
-                        <li><a href="appointments.php">Agendamentos</a></li>
-                        <li><a href="products.php">Produtos</a></li>
-                    </ul>
-                </nav>
+            <nav>
+                <ul>
+                    <li><a href="barbers.php">Barbeiros</a></li>
+                    <li><a href="clients.php">Clientes</a></li>
+                    <li><a href="appointments.php">Agendamentos</a></li>
+                    <li><a href="products.php">Produtos</a></li>
+                </ul>
+            </nav>
             <!--Paginas-->
         </header>
         <section>
@@ -58,24 +75,6 @@ $products = $conn->query("SELECT id, name, price, description, stock FROM produc
                     <button type="submit">Adicionar</button>
                 </form>
             </article>
-                <!--<h1>Produtos Existentes</h1>
-                <table border="1">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Preço</th>
-                        <th>Descrição</th>
-                    </tr>
-                    <?php while($row = $products->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['name']; ?></td>
-                            <td><?php echo $row['price']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
-                            <td><?php echo $row['stock']; ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </table>-->
         </section>
     </main>            
 </body>
